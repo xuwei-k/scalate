@@ -400,6 +400,20 @@ The bean is #{doesnotexist.color}
 The bean is blue
 """)
 
+  testRender("'-@ val' can be used in nested tags",
+"""
+%html
+  test
+  -@ val bean:Bean
+  The bean is #{bean.color}
+""","""
+<html>
+  test
+  The bean is red
+</html>
+""")
+
+
   def testRender(description:String, template:String, result:String) = {
     test(description) {
       expect(result) { render(template) }
@@ -431,7 +445,7 @@ The bean is blue
     context.attributes += "context"-> context
     context.attributes += "bean"-> Bean("red", 10)
 
-    val template = engine.loadTemporary("/org/fusesource/scalate/scaml/test.scaml", new TemplateArg("context", context.getClass.getName, true))
+    val template = engine.loadTemporary("/org/fusesource/scalate/scaml/test.scaml", new Binding("context", context.getClass.getName, true))
     template.render(context)
     out.close
     buffer.toString
