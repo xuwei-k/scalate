@@ -115,7 +115,7 @@ class TemplateEngine {
   def codeGeneratorForExtension(extension: String): CodeGenerator = {
     val rc = codeGenerators.get(extension).get
     if (rc == null) {
-      throw new TemplateException("Not a template file extension (" + codeGenerators.keysIterator.mkString("|") + "), you requested: " + extension);
+      throw new TemplateException("Not a template file extension (" + codeGenerators.keys.mkString("|") + "), you requested: " + extension);
     }
     rc;
   }

@@ -83,7 +83,7 @@ class SspCodeGenerator  extends AbstractCodeGenerator[PageFragment] {
   private def findParams(uri: String, fragments: List[PageFragment]): List[TemplateArg] = {
 
     val answer = fragments.flatMap {
-      case p: AttributeFragment => List(TemplateArg(p.name, p.className, p.autoImport, p.defaultValue))
+      case p: AttributeFragment => List(new TemplateArg(p.name, p.className, p.autoImport, p.defaultValue))
       case _ => Nil
     }
     

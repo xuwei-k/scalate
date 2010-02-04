@@ -86,6 +86,15 @@ class ScamlParser extends IndentedParser() {
 
   /** once p1 is matched, disable backtracking.  Comsumes p1. Yeilds the result of p2 */
   def prefixed[T, U]( p1:Parser[T], p2:Parser[U] ) = p1.~!(p2) ^^ { case _~x => x }
+
+
+  def guard[T](p: => Parser[T]): Parser[T] = Parser { in =>
+    p(in) match{
+      case s@ Success(s1,_) => Success(s1, in)
+      case e => e
+    }
+  }
+
   /** once p1 is matched, disable backtracking.  Does not comsume p1. Yeilds the result of p2 */
   def guarded[T, U]( p1:Parser[T], p2:Parser[U] ) = guard(p1)~!p2 ^^ { case _~x => x }
 

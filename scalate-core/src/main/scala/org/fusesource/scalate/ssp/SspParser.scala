@@ -19,8 +19,8 @@
 package org.fusesource.scalate.ssp
 
 import scala.util.parsing.combinator._
-import util.parsing.input.CharSequenceReader
 import org.fusesource.scalate.InvalidSyntaxException
+import scala.util.parsing.input.CharSequenceReader
 
 sealed abstract class PageFragment()
 
@@ -32,6 +32,13 @@ case class TextFragment(text: String) extends PageFragment
 case class AttributeFragment(kind:String, name: String, className: String, defaultValue: Option[String], autoImport:Boolean) extends PageFragment
 
 class SspParser extends RegexParsers {
+
+  def guard[T](p: => Parser[T]): Parser[T] = Parser { in =>
+    p(in) match{
+      case s@ Success(s1,_) => Success(s1, in)
+      case e => e
+    }
+  }
 
   var skipWhitespaceOn = false
   override def skipWhitespace = skipWhitespaceOn

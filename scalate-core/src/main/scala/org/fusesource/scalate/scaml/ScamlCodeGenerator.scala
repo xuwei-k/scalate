@@ -324,7 +324,7 @@ class ScamlCodeGenerator extends AbstractCodeGenerator[Statement] {
     val statements = (new ScamlParser).parse(hamlSource)
 
     val template_args = statements.flatMap {
-      case attribute: Attribute => List(TemplateArg(attribute.name, attribute.className, attribute.autoImport, attribute.defaultValue))
+      case attribute: Attribute => List(new TemplateArg(attribute.name, attribute.className, attribute.autoImport, attribute.defaultValue))
       case _ => Nil
     }
 

@@ -78,11 +78,17 @@ class ServletTemplateContext(val request: HttpServletRequest, val response: Http
     }
   }
 
-
+  def renderCollection(objects: Iterable[AnyRef]): Unit = {
+    renderCollection(objects, "index")
+  }
+  
+  def renderCollection(objects: Iterable[AnyRef], view: String): Unit = {
+    renderCollection(objects, view, {() => ""})
+  }
   /**
    * Renders a collection of model objects with an optional separator
    */
-  def renderCollection(objects: Traversable[AnyRef], view: String = "index", separator: () => String = {() => ""}): Unit = {
+  def renderCollection(objects: Iterable[AnyRef], view: String, separator: () => String): Unit = {
     var first = true
     for (model <- objects) {
       if (first) {
@@ -96,11 +102,13 @@ class ServletTemplateContext(val request: HttpServletRequest, val response: Http
     }
   }
   
+  def render(model: AnyRef ): Unit = render(model, "index")
+
   /**
    * Renders the view of the given model object, looking for the view in
    * packageName/className.viewName.ssp
    */
-  def render(model: AnyRef, view: String = "index"): Unit = {
+  def render(model: AnyRef, view: String): Unit = {
     if (model == null) {
       throw new NullPointerException("No model object given!")
     }
@@ -146,7 +154,9 @@ class ServletTemplateContext(val request: HttpServletRequest, val response: Http
     }
   }
 
-  protected def doInclude(dispatcher: RequestDispatcher, model: AnyRef = null): Unit = {
+  protected def doInclude(dispatcher: RequestDispatcher): Unit = doInclude(dispatcher, null)
+  
+  protected def doInclude(dispatcher: RequestDispatcher, model: AnyRef): Unit = {
     out.flush
 
     val wrappedRequest = new RequestWrapper(request)
@@ -217,7 +227,9 @@ class RequestWrapper(request: HttpServletRequest) extends HttpServletRequestWrap
 
 }
 
-class ResponseWrapper(response: HttpServletResponse, charEncoding: String = "ISO-8859-1") extends HttpServletResponseWrapper(response) {
+class ResponseWrapper(response: HttpServletResponse, charEncoding: String) extends HttpServletResponseWrapper(response) {
+
+  def this(response: HttpServletResponse) = this(response, "ISO-8859-1")
 
   val sw = new StringWriter()
   val bos = new ByteArrayOutputStream()

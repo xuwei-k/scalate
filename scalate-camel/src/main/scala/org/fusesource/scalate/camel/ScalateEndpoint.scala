@@ -6,15 +6,19 @@ import java.io._
 import org.apache.camel.util.{ExchangeHelper, ObjectHelper}
 import org.fusesource.scalate.util.{IOUtil}
 import org.fusesource.scalate.{DefaultRenderContext, TemplateEngine}
-import collection.JavaConversions._
 
 /**
  * @version $Revision : 1.1 $
  */
 
-class ScalateEndpoint(uri: String, component: ScalateComponent, templateUri: String,
-                      templateEngine: TemplateEngine = new TemplateEngine(), defaultTemplateExtension: String = "ssp")
+class ScalateEndpoint(uri: String, component: ScalateComponent, templateUri: String, templateEngine: TemplateEngine, defaultTemplateExtension: String)
         extends ResourceBasedEndpoint(uri, component, templateUri, null) {
+  
+  def this(uri: String, component: ScalateComponent, templateUri: String, templateEngine: TemplateEngine) =
+    this(uri, component, templateUri, templateEngine, "ssp")
+  def this(uri: String, component: ScalateComponent, templateUri: String) =
+    this(uri, component, templateUri,  new TemplateEngine())
+
   val RESOURCE_URI = "CamelScalateResourceUri"
   val TEMPLATE = "CamelScalateTemplate"
 
@@ -78,9 +82,11 @@ class ScalateEndpoint(uri: String, component: ScalateComponent, templateUri: Str
       val context = new DefaultRenderContext(new PrintWriter(buffer))
 
       val variableMap = ExchangeHelper.createVariableMap(exchange)
-      for ((key, value) <- variableMap) {
-        println("setting " + key + " = " + value)
-        context.setAttribute(key, value)
+      val i = variableMap.entrySet.iterator
+      while(i.hasNext) {
+        val entry = i.next
+        println("setting " + entry.getKey + " = " + entry.getValue)
+        context.setAttribute(entry.getKey, entry.getValue)
       }
       context.setAttribute("context", context)
       template.render(context)

@@ -43,7 +43,7 @@ class TemplateEngineServlet extends HttpServlet with Logging {
     // Get our ducks in a row before we get started
     val uri = request.getServletPath
     val context = new ServletTemplateContext(request, response, getServletContext)
-    val template = templateEngine.load(uri, TemplateArg("context", classOf[ServletTemplateContext].getName, true))
+    val template = templateEngine.load(uri, new TemplateArg("context", classOf[ServletTemplateContext].getName, true))
     template.render(context)
   }
 
