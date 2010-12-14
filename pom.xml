@@ -594,6 +594,13 @@
       <plugin>
         <artifactId>maven-site-plugin</artifactId>
         <version>${site-plugin-version}</version>
+        <dependencies>
+          <dependency>
+            <groupId>org.apache.maven.skins</groupId>
+            <artifactId>maven-default-skin</artifactId>
+            <version>1.0</version>
+          </dependency>
+        </dependencies>
         <executions>
           <execution>
             <id>attach-descriptor</id>
@@ -969,6 +976,8 @@
       <id>m2</id>
       <properties>
         <site-plugin-version>2.1.1</site-plugin-version>
+        
+        
       </properties>
     </profile>
 
