@@ -12,3 +12,8 @@ script:
 cache:
   directories:
     - $HOME/.ivy2/cache
+matrix:
+  include:
+  - scala: 2.13.0-M4
+    script:
+    - sbt "++ ${TRAVIS_SCALA_VERSION}!" compile
