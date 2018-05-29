@@ -19,7 +19,6 @@ package org.fusesource.scalate.mustache
 
 import org.fusesource.scalate._
 import support.{ Code, AbstractCodeGenerator }
-import collection.mutable.Stack
 import util.Log
 
 import scala.language.implicitConversions
@@ -42,7 +41,7 @@ class MustacheCodeGenerator extends AbstractCodeGenerator[Statement] {
   }
 
   private class SourceBuilder extends AbstractSourceBuilder[Statement] {
-    protected val scopes = new Stack[String]
+    protected[this] var scopes: List[String] = Nil
     protected var scopeIndex = 1
 
     protected def isImportStatementOrCommentOrWhitespace(fragment: Statement) = fragment match {
@@ -113,11 +112,15 @@ class MustacheCodeGenerator extends AbstractCodeGenerator[Statement] {
     protected def pushScope: String = {
       val name = "$_scope_" + scopeIndex
       scopeIndex += 1
-      scopes.push(name)
+      scopes ::= name
       name
     }
 
-    protected def popScope = scopes.pop
+    protected def popScope = {
+      val s = scopes.head
+      scopes = scopes.tail
+      s
+    }
   }
 
   override def generate(engine: TemplateEngine, source: TemplateSource, bindings: Traversable[Binding]): Code = {

@@ -20,7 +20,6 @@ package org.fusesource.scalate
 import support.AttributesHashMap
 
 import java.io._
-import collection.mutable.Stack
 import util.{ Log, Resource }
 
 object DefaultRenderContext extends Log
@@ -62,21 +61,22 @@ class DefaultRenderContext(
     out.print(value(v).toString)
   }
 
-  private val outStack = new Stack[PrintWriter]
+  private[this] var outStack: List[PrintWriter] = Nil
 
   /**
    * Evaluates the body capturing any output written to this page context during the body evaluation
    */
   def capture(body: => Unit): String = {
     val buffer = new StringWriter()
-    outStack.push(out)
+    outStack ::= out
     out = new PrintWriter(buffer)
     try {
       body
       out.close()
       buffer.toString
     } finally {
-      out = outStack.pop
+      out = outStack.head
+      outStack = outStack.tail
     }
   }
 
@@ -85,7 +85,7 @@ class DefaultRenderContext(
    */
   def capture(template: Template): String = {
     val buffer = new StringWriter()
-    outStack.push(out)
+    outStack ::= out
     out = new PrintWriter(buffer)
     try {
       debug("rendering template %s", template)
@@ -93,7 +93,8 @@ class DefaultRenderContext(
       out.close()
       buffer.toString
     } finally {
-      out = outStack.pop
+      out = outStack.head
+      outStack = outStack.tail
     }
   }
 

@@ -18,7 +18,6 @@
 package org.fusesource.scalate.ssp
 
 import org.fusesource.scalate._
-import collection.mutable.Stack
 import support.{ Text, Code, AbstractCodeGenerator }
 
 import scala.language.implicitConversions
@@ -169,11 +168,11 @@ class SspCodeGenerator extends AbstractCodeGenerator[PageFragment] {
    * lets check that the syntax is correct
    */
   protected def checkSyntax(fragments: List[PageFragment]): Unit = {
-    val endStack = new Stack[PageFragment]
+    var endStack: List[PageFragment] = Nil
     var clauseOpen = true
 
     def open(f: PageFragment): Unit = {
-      endStack.push(f)
+      endStack ::= f
       clauseOpen = true
     }
     def expect(f: PageFragment, expectedType: Class[_], name: String, closeName: String, closes: Boolean): Unit = if (endStack.isEmpty) {
@@ -206,7 +205,7 @@ class SspCodeGenerator extends AbstractCodeGenerator[PageFragment] {
       case f: EndFragment => if (endStack.isEmpty) {
         throw new InvalidSyntaxException("Extra #end without matching #if, #for, #match", f.pos)
       } else {
-        endStack.pop
+        endStack = endStack.tail
       }
       case f: ElseIfFragment => expect(f, classOf[IfFragment], "if", "else", false)
       case f: ElseFragment => expect(f, classOf[IfFragment], "if", "else", true)
