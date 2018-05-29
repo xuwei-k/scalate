@@ -16,4 +16,12 @@ matrix:
   include:
   - scala: 2.13.0-M4
     script:
-    - sbt "++ ${TRAVIS_SCALA_VERSION}!" compile
+    - sbt "++ ${TRAVIS_SCALA_VERSION}!"
+      scalate-jsp-converter/compile
+      scalate-war/compile
+      scalate-camel/compile
+      scalate-jruby/compile
+      scalate-pegdown/compile
+      scalate-markdownj/compile
+      scalate-guice/compile
+      scalate-jrebel/compile
