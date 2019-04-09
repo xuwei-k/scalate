@@ -4,7 +4,7 @@ import sbt._
 /** Build dependency and repository definitions. */
 object Dependencies {
 
-  val atmosphereJersey = "org.atmosphere" % "atmosphere-jersey" % "0.8.7"
+  val atmosphereJersey = "org.atmosphere" % "atmosphere-jersey" % "0.9.7"
   val camelScala = "org.apache.camel" % "camel-scala" % "2.23.1"
   val camelSpring = camelScala.withName("camel-spring")
   val javaxServlet = "javax.servlet" % "servlet-api" % "2.5"
