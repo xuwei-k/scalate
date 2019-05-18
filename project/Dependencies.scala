@@ -33,7 +33,7 @@ object Dependencies {
   val scalamd = "org.scalatra.scalate" %% "scalamd" % "1.7.2"
   val scalaTest = Def.setting {
     if (scalaVersion.value == "2.13.0-RC1")
-      Seq("org.scalatest" %% "scalatest" % "3.0.8-RC2")
+      Seq("org.scalatest" %% "scalatest" % "3.0.8-RC3")
     else
       Seq("org.scalatest" %% "scalatest" % "3.0.5")
   }
