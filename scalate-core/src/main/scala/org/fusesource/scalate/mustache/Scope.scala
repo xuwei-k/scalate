@@ -198,11 +198,6 @@ trait Scope {
   def createScope(name: String, value: Any): Scope = {
     value match {
       case n: NodeSeq => new NodeScope(this, name, n)
-      case v: org.fusesource.scalate.Compat.JMapWrapper[_, _] =>
-        new MapScope(
-          this,
-          name,
-          v.asInstanceOf[org.fusesource.scalate.Compat.JMapWrapper[String, _]])
       case v: scala.collection.Map[_, _] =>
         new MapScope(
           this,
