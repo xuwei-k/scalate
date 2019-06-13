@@ -18,12 +18,11 @@
 package org.fusesource.scalate.mustache
 
 import org.fusesource.scalate.RenderContext
-import org.fusesource.scalate.introspector.Introspector
 
 import scala.collection.JavaConverters._
 
 import java.{ lang => jl, util => ju }
-import xml.{ NodeSeq, XML }
+import xml.NodeSeq
 import org.fusesource.scalate.util.Log
 
 object Scope extends Log {
@@ -199,11 +198,11 @@ trait Scope {
   def createScope(name: String, value: Any): Scope = {
     value match {
       case n: NodeSeq => new NodeScope(this, name, n)
-      case v: scala.collection.convert.Wrappers.JMapWrapper[_, _] =>
+      case v: org.fusesource.scalate.Compat.JMapWrapper[_, _] =>
         new MapScope(
           this,
           name,
-          v.asInstanceOf[scala.collection.convert.Wrappers.JMapWrapper[String, _]])
+          v.asInstanceOf[org.fusesource.scalate.Compat.JMapWrapper[String, _]])
       case v: scala.collection.Map[_, _] =>
         new MapScope(
           this,
