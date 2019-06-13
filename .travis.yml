@@ -5,7 +5,8 @@ scala:
   - 2.12.8
   - 2.13.0-RC3
 jdk:
-  - oraclejdk8
+  - openjdk8
+dist: xenial
 matrix:
   include:
   - jdk: openjdk11
