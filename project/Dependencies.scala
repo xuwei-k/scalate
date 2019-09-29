@@ -22,7 +22,7 @@ object Dependencies {
 
   val jRubyComplete = "org.jruby" % "jruby-complete" % "9.2.8.0"
   val junit = "junit" % "junit" % "4.12"
-  val karafShell = "org.apache.karaf.shell" % "org.apache.karaf.shell.console" % "4.2.6"
+  val karafShell = "org.apache.karaf.shell" % "org.apache.karaf.shell.console" % "4.2.7"
   // TODO: upgrade to 1.5.x
   val lessCssEngine = "com.asual.lesscss" % "lesscss-engine" % "1.4.2"
   val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.2.3"
