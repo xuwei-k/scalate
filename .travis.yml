@@ -3,14 +3,14 @@ sudo: false
 dist: trusty
 scala:
   - 2.11.12
-  - 2.12.8
+  - 2.12.10
   - 2.13.0
 jdk:
   - oraclejdk8
 matrix:
   include:
   - jdk: openjdk11
-    scala: 2.12.8
+    scala: 2.12.10
 install:
   - sudo apt-get --yes install python-pygments
 script:
