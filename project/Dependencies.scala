@@ -21,7 +21,7 @@ object Dependencies {
     "https://repos.zeroturnaround.com/nexus/content/groups/zt-public/org/zeroturnaround/jr-sdk/4.6.2/jr-sdk-4.6.2.jar"
 
   val jRubyComplete = "org.jruby" % "jruby-complete" % "9.2.9.0"
-  val junit = "junit" % "junit" % "4.12"
+  val junit = "junit" % "junit" % "4.13"
   val karafShell = "org.apache.karaf.shell" % "org.apache.karaf.shell.console" % "4.2.6"
   // TODO: upgrade to 1.5.x
   val lessCssEngine = "com.asual.lesscss" % "lesscss-engine" % "1.4.2"
