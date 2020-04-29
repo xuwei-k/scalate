@@ -18,7 +18,8 @@
 package org.fusesource.scalate.test
 
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
-import org.scalatest.{ ConfigMap, FunSuite, BeforeAndAfterAllConfigMap }
+import org.scalatest.{ ConfigMap, BeforeAndAfterAllConfigMap }
+import org.scalatest.funsuite.AnyFunSuite
 import org.openqa.selenium.{ WebDriver, WebElement }
 import org.openqa.selenium.internal.FindsByXPath
 
@@ -27,7 +28,7 @@ import org.openqa.selenium.internal.FindsByXPath
  *
  * @version $Revision : 1.1 $
  */
-trait WebDriverMixin extends BeforeAndAfterAllConfigMap { this: FunSuite =>
+trait WebDriverMixin extends BeforeAndAfterAllConfigMap { this: AnyFunSuite =>
 
   def rootUrl: String
 

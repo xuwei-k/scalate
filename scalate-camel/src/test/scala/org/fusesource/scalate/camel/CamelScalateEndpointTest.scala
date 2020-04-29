@@ -18,18 +18,18 @@
 package org.fusesource.scalate.camel
 
 import _root_.org.junit.runner.RunWith
-import _root_.org.scalatest.junit.JUnitRunner
-import _root_.org.scalatest.FunSuite
+import _root_.org.scalatestplus.junit.JUnitRunner
 import _root_.org.apache.camel.builder.RouteBuilder
 import _root_.org.apache.camel._
 import _root_.org.apache.camel.impl.DefaultCamelContext
 import org.slf4j.LoggerFactory
+import org.scalatest.funsuite.AnyFunSuite
 
 /**
  * @version $Revision : 1.1 $
  */
 @RunWith(classOf[JUnitRunner])
-class CamelScalateEndpointTest extends FunSuite {
+class CamelScalateEndpointTest extends AnyFunSuite {
 
   val logger = LoggerFactory.getLogger(classOf[CamelScalateEndpointTest])
 
