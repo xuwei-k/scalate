@@ -52,18 +52,18 @@ class ScalateTemplateProvider extends MessageBodyWriter[AnyRef] {
 
   def resolve(engine: ServletTemplateEngine, argType: Class[_]): String = {
     val argBase = argType.getName.replace('.', '/')
-    engine.extensions.foreach { ext =>
+    engine.extensions.flatMap { ext =>
       val path = "/" + argBase + "." + ext
       try {
         engine.load(path)
-        return path
+        Some(path)
       } catch {
         case x: ResourceNotFoundException =>
+          None
         case x: TemplateException =>
-          return path
+          Some(path)
       }
-    }
-    null
+    }.headOption.orNull
   }
 
   def getSize(arg: AnyRef, argType: Class[_], genericType: Type, annotations: Array[Annotation], mediaType: MediaType) = -1L
