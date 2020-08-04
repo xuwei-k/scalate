@@ -16,7 +16,7 @@ object Dependencies {
   val jettyWebapp = jettyServer.withName("jetty-webapp")
   val jettyUtil = jettyServer.withName("jetty-util")
 
-  val jRubyComplete = "org.jruby" % "jruby-complete" % "9.2.12.0"
+  val jRubyComplete = "org.jruby" % "jruby-complete" % "9.2.13.0"
   val junit = "junit" % "junit" % "4.12"
   val karafShell = "org.apache.karaf.shell" % "org.apache.karaf.shell.console" % "4.2.9"
   // TODO: upgrade to 1.5.x
