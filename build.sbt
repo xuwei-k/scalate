@@ -185,6 +185,26 @@ lazy val scalateWeb = scalateProject("web").scalateSettings.published
     description := "Single dependency for all modules required to use Scalate and common wiki formats."
   )
 
+lazy val website = scalateProject("website").scalateSettings
+  .enablePlugins(ScalatePlugin)
+  .settings(
+    ScalatePlugin.scalateSettings,
+    Compile / scalaSource := baseDirectory.value / "ext",
+    Compile / ScalatePlugin.ScalateKeys.scalateTemplateConfig := Def.uncached {
+      Seq(
+        ScalatePlugin.TemplateConfig(
+          scalateTemplateDirectory = baseDirectory.value / "src",
+          scalateImports = Seq("import _root_.scalate.Boot.*", "import _root_.Website._"),
+          scalateBindings = Nil,
+        )
+      )
+    },
+    libraryDependencies ++= Seq(
+      scalamd,
+      "io.github.scalate" %% "scalate-wikitext" % "1.11.0",
+    ),
+  )
+
 lazy val scalateWikitext = scalateProject("wikitext").scalateSettings.published
   .dependsOn(scalateCore, scalateTest % Test)
   .settings(
